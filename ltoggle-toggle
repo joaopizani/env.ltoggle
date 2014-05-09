@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+DIR="$(cd -P "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" && pwd)"
+source "${DIR}/ltoggle-common"
+
+if __iskeywindow "${1}"; then
+    wmctrl -i -a "$(__winidfromfile "${1}")"
+else
+    wmctrl -a "${1}"
+fi
+

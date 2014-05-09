@@ -1,0 +1,19 @@
+DIR="$(cd -P "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" && pwd)"
+
+IDPREFIX=".ltoggle-idlog"
+LTOGGLE_KEYS=("shared" "other" "brwork" "brenv" "brcalendar")
+
+__member() {
+    local e
+    for e in "${@:2}"; do [[ "$e" == "$1" ]] && return 0; done
+    return 1
+}
+
+__iskeywindow() { __member "${1}" "${LTOGGLE_KEYS[@]}"; }
+
+__curworkspaceid() { wmctrl -d | grep \* | head -c 1; }
+__redirnullbg() { $@ 1> /dev/null 2> /dev/null < /dev/null & disown %?'$@'; }
+__recordactivewinid() { xprop -root -f _NET_ACTIVE_WINDOW 0x " \$0\\n" _NET_ACTIVE_WINDOW | awk "{print \$2}" > "${DIR}/${IDPREFIX}-${1}"; }
+__waitopen() { sleep "${1}s"; }
+__winidfromfile() { cat "${DIR}/${IDPREFIX}-${1}"; }
+

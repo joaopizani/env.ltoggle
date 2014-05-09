@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+DIR="$(cd -P "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" && pwd)"
+source "${DIR}/ltoggle-common"
+
+
+declare -A LTOGGLE_LAUNCH_COMMANDS
+LTOGGLE_LAUNCH_COMMANDS=( ["shared"]="xterm -title screen-shared -e screen -xRR shared" \
+                          ["other"]="xterm -title screen-other -e screen -xRR other" \
+                          ["brwork"]="firefox -new-window https://github.com/joaopizani" \
+                          ["brenv"]="firefox -new-window https://www.archlinux.org" \
+                          ["brcalendar"]="firefox -new-window https://calendar.google.com" )
+
+declare -A LTOGGLE_WORKSPACES=(["shared"]="0" ["other"]="1" ["brwork"]="0" ["brenv"]="2" ["brcalendar"]="3")
+declare -A LTOGGLE_WAITTIMES=(["shared"]="2"["other"]="2" ["brwork"]="3" ["brenv"]="3" ["brcalendar"]="3")
+
+
+ORIG_WORKSPACE="$(__curworkspaceid)"
+wmctrl -s "${LTOGGLE_WORKSPACES["${1}"]}"
+__redirnullbg ${LTOGGLE_LAUNCH_COMMANDS["${1}"]}
+__waitopen "${LTOGGLE_WAITTIMES["${1}"]}"
+__recordactivewinid "${1}"
+wmctrl -s "${ORIG_WORKSPACE}"
