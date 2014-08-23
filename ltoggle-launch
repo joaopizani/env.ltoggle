@@ -9,10 +9,22 @@ LTOGGLE_LAUNCH_COMMANDS=( ["shared"]="xterm -title screen-shared -e screen -xRR 
                           ["other"]="xterm -title screen-other -e screen -xRR other" \
                           ["brwork"]="firefox -new-window" \
                           ["brenv"]="firefox -new-window" \
-                          ["brcalendar"]="firefox -new-window" )
+                          ["brcalendar"]="firefox -new-window" \
+                          ["calculator"]="gnome-calculator" )
 
-declare -A LTOGGLE_WORKSPACES=(["shared"]="0" ["other"]="1" ["brwork"]="0" ["brenv"]="2" ["brcalendar"]="3")
-declare -A LTOGGLE_WAITTIMES=(["shared"]="2" ["other"]="2" ["brwork"]="8" ["brenv"]="8" ["brcalendar"]="8")
+declare -A LTOGGLE_WORKSPACES=( ["shared"]="0" \
+                                ["other"]="1" \
+                                ["brwork"]="0" \
+                                ["brenv"]="2" \
+                                ["brcalendar"]="3" \
+                                ["calculator"]="3" )
+
+declare -A LTOGGLE_WAITTIMES=( ["shared"]="2" \
+                               ["other"]="2" \
+                               ["brwork"]="8" \
+                               ["brenv"]="8" \
+                               ["brcalendar"]="8" \
+                               ["calculator"]="2" )
 
 
 ORIG_WORKSPACE="$(__curworkspaceid)"
