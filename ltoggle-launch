@@ -21,9 +21,9 @@ declare -A LTOGGLE_WORKSPACES=( ["shared"]="0" \
 
 declare -A LTOGGLE_WAITTIMES=( ["shared"]="2" \
                                ["other"]="2" \
-                               ["brwork"]="8" \
-                               ["brenv"]="8" \
-                               ["brcalendar"]="8" \
+                               ["brwork"]="6" \
+                               ["brenv"]="7" \
+                               ["brcalendar"]="7" \
                                ["calculator"]="2" )
 
 
