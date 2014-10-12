@@ -11,7 +11,6 @@ __member() {
 
 __iskeywindow() { __member "${1}" "${LTOGGLE_KEYS[@]}"; }
 
-__curworkspaceid() { wmctrl -d | grep \* | head -c 1; }
 __redirnullbg() { $@ 1> /dev/null 2> /dev/null < /dev/null & disown %?'$@'; }
 __recordactivewinid() { xprop -root -f _NET_ACTIVE_WINDOW 0x " \$0\\n" _NET_ACTIVE_WINDOW | awk "{print \$2}" > "${DIR}/${IDPREFIX}-${1}"; }
 __waitopen() { sleep "${1}s"; }
