@@ -3,7 +3,8 @@
 DIR="$(cd -P "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" && pwd)"
 BINDIR="${HOME}/bin"
 
+SCRIPTS_TO_INSTALL=( 'ltoggle-launch' 'ltoggle-toggle' 'ltoggle-capture' )
+
 mkdir -p "${BINDIR}"
-ln -f -s -n "${DIR}/ltoggle-launch"  "${BINDIR}/ltoggle-launch"
-ln -f -s -n "${DIR}/ltoggle-toggle"  "${BINDIR}/ltoggle-toggle"
+for s in ${SCRIPTS_TO_INSTALL[@]}; do ln -f -s -n "${DIR}/${s}" "${BINDIR}/${s}"; done
 
