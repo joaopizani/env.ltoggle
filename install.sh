@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+
+sudo apt-get install xdotool
+
+
 DIR="$(cd -P "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" && pwd)"
 BINDIR="${HOME}/bin"
 

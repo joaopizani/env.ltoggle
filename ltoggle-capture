@@ -3,5 +3,5 @@
 DIR="$(cd -P "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 source "${DIR}/ltoggle-common"
 
-xwininfo | grep -oP 'Window id: \K\w+' 2> "/dev/null" 1> "${DIR}/${IDPREFIX}-${1}"
+xdotool click 1 | xwininfo | grep -oP 'Window id: \K\w+' 2> "/dev/null" 1> "${DIR}/${IDPREFIX}-${1}"
 
