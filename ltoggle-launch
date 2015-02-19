@@ -12,7 +12,7 @@ declare -A LTOGGLE_LAUNCH_COMMANDS=( ["shared"]="xterm -title screen-shared -e s
 
 declare -A LTOGGLE_WAITTIMES=( ["shared"]="2" \
                                ["other"]="2" \
-                               ["brwork"]="9" \
+                               ["brwork"]="10" \
                                ["brenv"]="6" \
                                ["brcalendar"]="6" )
 
