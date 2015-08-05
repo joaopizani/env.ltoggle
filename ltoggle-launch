@@ -15,7 +15,7 @@ declare -A LTOGGLE_WAITTIMES=( ["shared"]="2" \
                                ["other"]="2" \
                                ["brwork"]="14" \
                                ["brenv"]="6" \
-                               ["keepass"]="8" \
+                               ["keepass"]="10" \
                                ["brcalendar"]="6" )
 
 
