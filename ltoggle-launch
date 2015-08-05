@@ -8,12 +8,14 @@ declare -A LTOGGLE_LAUNCH_COMMANDS=( ["shared"]="xterm -title screen-shared -e s
                                      ["other"]="xterm -title screen-other -e screen -xRR other" \
                                      ["brwork"]="firefox -new-window" \
                                      ["brenv"]="firefox -new-window" \
+                                     ["keepass"]="keepass2" \
                                      ["brcalendar"]="firefox -new-window" )
 
 declare -A LTOGGLE_WAITTIMES=( ["shared"]="2" \
                                ["other"]="2" \
                                ["brwork"]="14" \
                                ["brenv"]="6" \
+                               ["keepass"]="8" \
                                ["brcalendar"]="6" )
 
 
