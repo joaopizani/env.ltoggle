@@ -1,15 +1,90 @@
+MODTOGGLE="<Super>"
+MODLAUNCH="<Shift><Super>"
+MODCAPTURE="<Shift><Alt><Super>"
+
+declare -A LTOGGLE_MAP
+LTOGGLE_MAP=( \
+              ["termshared|cmd"]="xterm -title screen-shared -e screen -xRR shared" \
+              ["termshared|wait"]="2" \
+              ["termshared|keyb|toggle"]="${MODTOGGLE}3" \
+              ["termshared|keyb|launch"]="${MODLAUNCH}numbersign" \
+              ["termshared|keyb|capture"]="${MODCAPTURE}numbersign" \
+              \
+              ["termother|cmd"]="xterm -title screen-other -e screen -xRR other" \
+              ["termother|wait"]="2" \
+              ["termother|keyb|toggle"]="${MODTOGGLE}4" \
+              ["termother|keyb|launch"]="${MODLAUNCH}dollar" \
+              ["termother|keyb|capture"]="${MODCAPTURE}dollar" \
+              \
+              ["brwork|cmd"]="firefox -new-window" \
+              ["brwork|wait"]="14" \
+              ["brwork|keyb|toggle"]="${MODTOGGLE}1" \
+              ["brwork|keyb|launch"]="${MODLAUNCH}exclam" \
+              ["brwork|keyb|capture"]="${MODCAPTURE}exclam" \
+              \
+              ["brenv|cmd"]="firefox -new-window" \
+              ["brenv|wait"]="6" \
+              ["brenv|keyb|toggle"]="${MODTOGGLE}grave" \
+              ["brenv|keyb|launch"]="${MODLAUNCH}asciitilde" \
+              ["brenv|keyb|capture"]="${MODCAPTURE}asciitilde" \
+              \
+              ["brcalendar|cmd"]="firefox -new-window" \
+              ["brcalendar|wait"]="6" \
+              ["brcalendar|keyb|toggle"]="${MODTOGGLE}2" \
+              ["brcalendar|keyb|launch"]="${MODLAUNCH}at" \
+              ["brcalendar|keyb|capture"]="${MODCAPTURE}at" \
+              \
+              ["keepass|cmd"]="keepass2" \
+              ["keepass|wait"]="12" \
+              ["keepass|keyb|toggle"]="${MODTOGGLE}5" \
+              ["keepass|keyb|launch"]="${MODLAUNCH}percent" \
+              ["keepass|keyb|capture"]="${MODCAPTURE}percent" \
+              \
+              ["win06|cmd"]="xeyes" \
+              ["win06|wait"]="1" \
+              ["win06|keyb|toggle"]="${MODTOGGLE}6" \
+              ["win06|keyb|launch"]="${MODLAUNCH}asciicircum" \
+              ["win06|keyb|capture"]="${MODCAPTURE}asciicircum" \
+              \
+              ["win07|cmd"]="xeyes" \
+              ["win07|wait"]="1" \
+              ["win07|keyb|toggle"]="${MODTOGGLE}7" \
+              ["win07|keyb|launch"]="${MODLAUNCH}ampersand" \
+              ["win07|keyb|capture"]="${MODCAPTURE}ampersand" \
+              \
+              ["win08|cmd"]="xeyes" \
+              ["win08|wait"]="1" \
+              ["win08|keyb|toggle"]="${MODTOGGLE}8" \
+              ["win08|keyb|launch"]="${MODLAUNCH}asterisk" \
+              ["win08|keyb|capture"]="${MODCAPTURE}asterisk" \
+              \
+              ["win09|cmd"]="xeyes" \
+              ["win09|wait"]="1" \
+              ["win09|keyb|toggle"]="${MODTOGGLE}9" \
+              ["win09|keyb|launch"]="${MODLAUNCH}parenleft" \
+              ["win09|keyb|capture"]="${MODCAPTURE}parenleft" \
+              \
+              ["win00|cmd"]="xeyes" \
+              ["win00|wait"]="1" \
+              ["win00|keyb|toggle"]="${MODTOGGLE}0" \
+              ["win00|keyb|launch"]="${MODLAUNCH}parenright" \
+              ["win00|keyb|capture"]="${MODCAPTURE}parenright" \
+              \
+              )
+
+
+
 DIR="$(cd -P "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" && pwd)"
 
-IDPREFIX=".ltoggle-idlog"
-LTOGGLE_KEYS=("shared" "other" "brwork" "brenv" "brcalendar" "keepass" "win05" "win06" "win07" "win08" "win09" "win00")
+IDPREFIX=".ltoggle-winid"
 
 __member() {
     local e
-    for e in "${@:2}"; do [[ "$e" == "$1" ]] && return 0; done
+    for e in "${@:2}"; do [[ "${1}" =~ ${e} ]] && return 0; done
     return 1
 }
 
-__iskeywindow() { __member "${1}" "${LTOGGLE_KEYS[@]}"; }
+__iskeywindow() { __member "${1}" ${!LTOGGLE_MAP[@]}; }
 
 __redirnullbg() { $@ 1> /dev/null 2> /dev/null < /dev/null & disown %?'$@'; }
 __recordactivewinid() { xprop -root -f _NET_ACTIVE_WINDOW 0x " \$0\\n" _NET_ACTIVE_WINDOW | awk "{print \$2}" > "${DIR}/${IDPREFIX}-${1}"; }

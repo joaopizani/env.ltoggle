@@ -4,22 +4,7 @@ DIR="$(cd -P "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" && pwd)"
 source "${DIR}/ltoggle-common"
 
 
-declare -A LTOGGLE_LAUNCH_COMMANDS=( ["shared"]="xterm -title screen-shared -e screen -xRR shared" \
-                                     ["other"]="xterm -title screen-other -e screen -xRR other" \
-                                     ["brwork"]="firefox -new-window" \
-                                     ["brenv"]="firefox -new-window" \
-                                     ["keepass"]="keepass2" \
-                                     ["brcalendar"]="firefox -new-window" )
-
-declare -A LTOGGLE_WAITTIMES=( ["shared"]="2" \
-                               ["other"]="2" \
-                               ["brwork"]="14" \
-                               ["brenv"]="6" \
-                               ["keepass"]="10" \
-                               ["brcalendar"]="6" )
-
-
-__redirnullbg ${LTOGGLE_LAUNCH_COMMANDS["${1}"]}
-__waitopen "${LTOGGLE_WAITTIMES["${1}"]}"
+__redirnullbg ${LTOGGLE_MAP["${1}|cmd"]}
+__waitopen "${LTOGGLE_MAP["${1}|wait"]}"
 __recordactivewinid "${1}"
 

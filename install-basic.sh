@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 
-sudo apt-get update
-sudo apt-get install wmctrl xdotool
+# sudo apt-get update
+# sudo apt-get install wmctrl xdotool
 
 
 DIR="$(cd -P "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" && pwd)"
