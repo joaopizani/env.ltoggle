@@ -19,41 +19,35 @@ SCHEMA_STR="${SCHEMA_STR_}${SS}"
 PATH_STR="${PATH_STR_}${SS}s"
 
 
-KEYLIST="['${PATH_STR}/custom0/'"
-CUSTOMKB_CNT=1
+SCHEMA_STR_TRUNCATED="${SCHEMA_STR_:0:${#SCHEMA_STR_} - 1}"
+KEYLIST_EXISTING="$(gsettings get "${SCHEMA_STR_TRUNCATED}" "${SS}s")"
+KEYLIST_ADDITIONAL="'${PATH_STR}/custom-ltoggle-empty/'"
 for ixx in ${!LTOGGLE_MAP[@]}; do
     if [[ "${ixx:(-${#CMDSTR})}" == "${CMDSTR}" ]]; then
-        KEYLIST+=",'${PATH_STR}/custom${CUSTOMKB_CNT}/'"
-        ((CUSTOMKB_CNT++))
-        KEYLIST+=",'${PATH_STR}/custom${CUSTOMKB_CNT}/'"
-        ((CUSTOMKB_CNT++))
-        KEYLIST+=",'${PATH_STR}/custom${CUSTOMKB_CNT}/'"
-        ((CUSTOMKB_CNT++))
+        ix="${ixx:0:${#ixx} - ${#CMDSTR}}"
+        KEYLIST_ADDITIONAL+=",'${PATH_STR}/custom-${ix}-toggle/'"
+        KEYLIST_ADDITIONAL+=",'${PATH_STR}/custom-${ix}-launch/'"
+        KEYLIST_ADDITIONAL+=",'${PATH_STR}/custom-${ix}-capture/'"
     fi
 done
-KEYLIST+="]"
-
-SCHEMA_STR_TRUNCATED="${SCHEMA_STR_:0:${#SCHEMA_STR_} - 1}"
+KEYLIST_ADDITIONAL+="]"
+[[ ${KEYLIST_EXISTING:(-2)} = "[]" ]] && KEYLIST="[${KEYLIST_ADDITIONAL}" || KEYLIST="${KEYLIST_EXISTING:0:${#KEYLIST_EXISTING} - 1},${KEYLIST_ADDITIONAL}"
 gsettings set "${SCHEMA_STR_TRUNCATED}" "${SS}s" "${KEYLIST}"
 
 
-CUSTOMKB_CNT=0
 for ixx in ${!LTOGGLE_MAP[@]}; do
     if [[ "${ixx:(-${#CMDSTR})}" == "${CMDSTR}" ]]; then
         ix="${ixx:0:${#ixx} - ${#CMDSTR}}"
 
-        gsettings set "${SCHEMA_STR}:${PATH_STR}/custom${CUSTOMKB_CNT}/" "name"    "'ltoggle-toggle_${ix}'"
-        gsettings set "${SCHEMA_STR}:${PATH_STR}/custom${CUSTOMKB_CNT}/" "command" "'ltoggle-toggle ${ix}'"
-        gsettings set "${SCHEMA_STR}:${PATH_STR}/custom${CUSTOMKB_CNT}/" "binding" "'${LTOGGLE_MAP["${ix}|keyb|toggle"]}'"
-        ((CUSTOMKB_CNT++))
-        gsettings set "${SCHEMA_STR}:${PATH_STR}/custom${CUSTOMKB_CNT}/" "name"    "'ltoggle-launch_${ix}'"
-        gsettings set "${SCHEMA_STR}:${PATH_STR}/custom${CUSTOMKB_CNT}/" "command" "'ltoggle-launch ${ix}'"
-        gsettings set "${SCHEMA_STR}:${PATH_STR}/custom${CUSTOMKB_CNT}/" "binding" "'${LTOGGLE_MAP["${ix}|keyb|launch"]}'"
-        ((CUSTOMKB_CNT++))
-        gsettings set "${SCHEMA_STR}:${PATH_STR}/custom${CUSTOMKB_CNT}/" "name"    "'ltoggle-capture_${ix}'"
-        gsettings set "${SCHEMA_STR}:${PATH_STR}/custom${CUSTOMKB_CNT}/" "command" "'ltoggle-capture ${ix}'"
-        gsettings set "${SCHEMA_STR}:${PATH_STR}/custom${CUSTOMKB_CNT}/" "binding" "'${LTOGGLE_MAP["${ix}|keyb|capture"]}'"
-        ((CUSTOMKB_CNT++))
+        gsettings set "${SCHEMA_STR}:${PATH_STR}/custom-${ix}-toggle/" "name"    "'ltoggle-toggle_${ix}'"
+        gsettings set "${SCHEMA_STR}:${PATH_STR}/custom-${ix}-toggle/" "command" "'ltoggle-toggle ${ix}'"
+        gsettings set "${SCHEMA_STR}:${PATH_STR}/custom-${ix}-toggle/" "binding" "'${LTOGGLE_MAP["${ix}|keyb|toggle"]}'"
+        gsettings set "${SCHEMA_STR}:${PATH_STR}/custom-${ix}-launch/" "name"    "'ltoggle-launch_${ix}'"
+        gsettings set "${SCHEMA_STR}:${PATH_STR}/custom-${ix}-launch/" "command" "'ltoggle-launch ${ix}'"
+        gsettings set "${SCHEMA_STR}:${PATH_STR}/custom-${ix}-launch/" "binding" "'${LTOGGLE_MAP["${ix}|keyb|launch"]}'"
+        gsettings set "${SCHEMA_STR}:${PATH_STR}/custom-${ix}-capture/" "name"    "'ltoggle-capture_${ix}'"
+        gsettings set "${SCHEMA_STR}:${PATH_STR}/custom-${ix}-capture/" "command" "'ltoggle-capture ${ix}'"
+        gsettings set "${SCHEMA_STR}:${PATH_STR}/custom-${ix}-capture/" "binding" "'${LTOGGLE_MAP["${ix}|keyb|capture"]}'"
     fi
 done
 
